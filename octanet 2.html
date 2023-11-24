@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Project Tasks</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .task-container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .task-list {
+            padding: 20px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task-label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .checkbox {
+            margin-right: 10px;
+        }
+
+        .delete-btn {
+            color: #e74c3c;
+            cursor: pointer;
+        }
+
+        .progress {
+            background-color: #3498db;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="task-container">
+    <div class="header">Website Project Tasks</div>
+    <div class="task-list" id="task-list">
+        <!-- Tasks will be dynamically added here using JavaScript -->
+    </div>
+    <div class="add-task">
+        <input type="text" id="task-input" placeholder="Add a new task">
+        <select id="priority-select">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+        <input type="date" id="deadline-input">
+        <button onclick="addTask()">Add</button>
+    </div>
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById("task-input");
+            var prioritySelect = document.getElementById("priority-select");
+            var deadlineInput = document.getElementById("deadline-input");
+
+            var taskText = taskInput.value;
+            var priority = prioritySelect.value;
+            var deadline = deadlineInput.value;
+
+            if (taskText.trim() !== "") {
+                var taskList = document.getElementById("task-list");
+
+                var taskItem = document.createElement("div");
+                taskItem.className = "task-item";
+
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.className = "checkbox";
+                taskItem.appendChild(checkbox);
+
+                var taskDetails = document.createElement("div");
+                taskDetails.className = "task-details";
+
+                var taskLabel = document.createElement("div");
+                taskLabel.className = "task-label";
+                taskLabel.innerText = taskText;
+                taskDetails.appendChild(taskLabel);
+
+                var taskInfo = document.createElement("div");
+                taskInfo.innerText = `Priority: ${priority}, Deadline: ${deadline}`;
+                taskDetails.appendChild(taskInfo);
+
+                taskItem.appendChild(taskDetails);
+
+                var deleteBtn = document.createElement("div");
+                deleteBtn.className = "delete-btn";
+                deleteBtn.innerText = "X";
+                deleteBtn.onclick = function () {
+                    taskItem.remove();
+                };
+                taskItem.appendChild(deleteBtn);
+
+                var progress = document.createElement("div");
+                progress.className = "progress";
+                taskItem.appendChild(progress);
+
+                taskList.appendChild(taskItem);
+
+                taskInput.value = "";
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>
